@@ -1,5 +1,16 @@
 import numpy as np
 import mne
+import torch
+
+class DatasetWrapped(torch.utils.data.Dataset):
+    def __init__(self, X, Y):
+        # Convert to torch tensors
+        self.X = torch.from_numpy(X).float()
+        self.Y = torch.from_numpy(Y).long()
+    def __len__(self):
+        return len(self.X)
+    def __getitem__(self, idx):
+        return(self.X[idx], self.Y[idx])
 
 def get_data(subjects, dataset, normalize = False):
 
